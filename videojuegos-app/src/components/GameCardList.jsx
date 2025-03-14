@@ -1,4 +1,3 @@
-// src/components/GameCardList.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -9,14 +8,22 @@ const GameCardList = ({ games }) => {
     if (score >= 50) return "medium"
     return "low"
   }
+
+  // Función para ordenar los juegos
+  const sortedGames = [...games].sort((a, b) => {
+    const scoreA = a.metacritic || 0; //
+    const scoreB = b.metacritic || 0;
+    return scoreB - scoreA;
+  });
+
   return (
     <div className="game-card-list">
-      <h2>Mejores juegos segun Metacritic</h2>
+      <h2>Mejores juegos según Metacritic</h2>
       {games.length === 0 ? (
         <div className="loading">Cargando juegos...</div>
       ) : (
         <ul className="game-grid">
-          {games.map((game) => (
+          {sortedGames.map((game) => (
             <li key={game.id} className="game-card">
               <Link to={`/game/${game.id}`}>
                 <img src={game.background_image || "/placeholder-game.jpg"} alt={game.name} loading="lazy" />
